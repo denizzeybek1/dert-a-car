@@ -44,21 +44,21 @@ export default function HomePage() {
           {/* Araç Kartı 1 */}
           <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow group">
             <div className="h-48 bg-gray-200 relative overflow-hidden">
-              <img src="https://x0.at/lULB.jpg" alt="Opel Corsa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img src="https://x0.at/fku7.jpg" alt="Opel Corsa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
               <div className="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
-                Yeni Kasa
+                2026
               </div>
             </div>
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-gray-900">Opel Corsa GS</h3>
-                  <p className="text-sm text-gray-500">1.2 Hybrid (Grafik Gri)</p>
+                  <p className="text-sm text-gray-500">1.2 Turbo (Grafit Gri)</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Otomatik</span>
-                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">145 HP</span>
+                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Hatchback</span>
                 <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Hybrid</span>
               </div>
               <button className="w-full py-2.5 border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors">
@@ -70,19 +70,22 @@ export default function HomePage() {
           {/* Araç Kartı 2 */}
           <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow group">
             <div className="h-48 bg-gray-200 relative overflow-hidden">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNsY4DD-MSgnmxj4UrUm_221BzIXrXRhEzbpcpZ4Hq2HISfwzMjCcftNc&s=10" alt="Hyundai i20" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+              <img src="https://x0.at/Lv5w.jpg" alt="Honda Civic" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
+                2014
+              </div>
             </div>
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">Hyundai i20 Elite</h3>
-                  <p className="text-sm text-gray-500">1.4 MPI (Kırmızı)</p>
+                  <h3 className="text-xl font-bold text-gray-900">Honda Civic</h3>
+                  <p className="text-sm text-gray-500">1.6 VTEC (Beyaz)</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Otomatik</span>
-                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Benzin</span>
-                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Sunroof</span>
+                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Sedan</span>
+                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Benzin/LPG</span>
               </div>
               <button className="w-full py-2.5 border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors">
                 Detayları İncele
@@ -94,18 +97,21 @@ export default function HomePage() {
           <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow group">
             <div className="h-48 bg-gray-200 relative overflow-hidden">
               <img src="https://x0.at/S0mb.jpg" alt="Peugeot 3008" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-gray-900 shadow-sm">
+                2024
+              </div>
             </div>
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">Peugeot 3008</h3>
-                  <p className="text-sm text-gray-500">1.2 GT Blackpack</p>
+                  <h3 className="text-xl font-bold text-gray-900">Peugeot 3008 GT</h3>
+                  <p className="text-sm text-gray-500">1.2 Turbo (Sedefli Beyaz)</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Otomatik</span>
-                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Hybrid</span>
                 <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">SUV</span>
+                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-md font-medium">Hybrid</span>
               </div>
               <button className="w-full py-2.5 border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-50 transition-colors">
                 Detayları İncele
