@@ -5,6 +5,8 @@ export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
+  phone: text('phone').notNull(),
+  password: text('password').notNull(),
 });
 
 // Araçlar Tablosu
@@ -16,3 +18,4 @@ export const cars = sqliteTable('cars', {
   pricePerDay: integer('price_per_day').notNull(), // Günlük kiralama ücreti
   isAvailable: integer('is_available', { mode: 'boolean' }).default(true), // Araç müsait mi?
 });
+

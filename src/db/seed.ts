@@ -1,17 +1,24 @@
 import { db } from '.';
 import { users, cars } from './schema';
+import bcrypt from 'bcryptjs';
 
 async function seed() {
-  // 5 Adet Kullanıcı
+  // Diğer kullanıcılar için varsayılan şifre (123456)
+  const defaultPassword = await bcrypt.hash('123456', 10);
+  
+  // Kendi Şifrem
+  const denizPassword = await bcrypt.hash('izmir', 10); 
+
+  // 5 Adet Kullanıcı (TELEFON NUMARALARI EKLENDİ)
   await db.insert(users).values([
-    { name: 'Metin Dinmez', email: 'metin@example.com' },
-    { name: 'Furkan Tırpan', email: 'furkan@example.com' },
-    { name: 'Çağlar Gündoğ', email: 'caglar@example.com' },
-    { name: 'Deniz Zeybek', email: 'deniz@example.com' },
-    { name: 'Nebi Gökçen', email: 'nebi@example.com' },
+    { name: 'Metin Dinmez', email: 'metin@example.com', phone: '05551112233', password: defaultPassword },
+    { name: 'Furkan Tırpan', email: 'furkan@example.com', phone: '05552223344', password: defaultPassword },
+    { name: 'Çağlar Gündoğ', email: 'caglar@example.com', phone: '05553334455', password: defaultPassword },
+    { name: 'Deniz Zeybek', email: 'deniz@example.com', phone: '05001234567', password: denizPassword },
+    { name: 'Nebi Gökçen', email: 'nebi@example.com', phone: '05555556677', password: defaultPassword },
   ]);
   
-  console.log('Kullanıcılar eklendi.');
+  console.log('Kullanıcılar eklendi. (Telefon numaraları ve özel şifrelerle)');
 
   // 10 Adet Araç
   await db.insert(cars).values([
