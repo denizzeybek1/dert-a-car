@@ -1,8 +1,45 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
+  const router = useRouter();
+  
+  // Form verilerini ve hata durumlarını tutacağımız state'ler
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Form gönderildiğinde çalışacak fonksiyon
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); // Sayfanın yenilenmesini engeller
+    setError("");
+    setLoading(true);
+
+    try {
+      // Backend API'sine bilgileri gönderiyoruz
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        router.push("/");
+        router.refresh();
+      } else {
+        const data = await res.json();
+        setError(data.error || "Giriş başarısız oldu.");
+      }
+    } catch (err) {
+      setError("Sunucuya bağlanırken bir hata oluştu.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex">
@@ -17,13 +54,23 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <form className="space-y-6">
+          {/* Hata mesajı varsa göster */}
+          {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm font-medium border border-red-100">
+              {error}
+            </div>
+          )}
+
+          {/* onSubmit olayını forma bağladık */}
+          <form onSubmit={handleLogin} className="space-y-6">
             {/* E-posta */}
             <div>
               <label className="block text-sm font-semibold text-gray-700">E-posta Adresi</label>
               <input
                 type="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all"
                 placeholder="ornek@dertacar.com"
               />
@@ -40,6 +87,8 @@ export default function LoginPage() {
               <input
                 type="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all"
                 placeholder="••••••••"
               />
@@ -48,9 +97,10 @@ export default function LoginPage() {
             {/* Buton */}
             <button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition-colors"
+              disabled={loading}
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition-colors disabled:opacity-70"
             >
-              Giriş Yap
+              {loading ? "Giriş Yapılıyor..." : "Giriş Yap"}
             </button>
           </form>
 
@@ -63,17 +113,14 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* SAĞ TARAF: Otomotiv Görseli (Mobilde gizlenir) */}
+      {/* SAĞ TARAF: Otomotiv Görseli (Değiştirilmedi) */}
       <div className="hidden lg:flex w-1/2 bg-gray-900 relative">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1000&auto=format&fit=crop')" }}
         >
-          {/* Karanlık Overlay */}
           <div className="absolute inset-0 bg-black/60"></div>
         </div>
-        
-        {/* Görsel Üzerindeki Yazı */}
         <div className="relative z-10 flex flex-col justify-end p-16 text-white h-full">
           <h2 className="text-4xl font-bold mb-4">Tüm araç ihtiyaçlarınız için tek platform.</h2>
           <p className="text-lg text-gray-300">

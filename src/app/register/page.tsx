@@ -1,8 +1,54 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
+  // Form state'leri
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  // Durum state'leri
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSuccess("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...");
+        // 2 saniye sonra login sayfasına yönlendir
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      } else {
+        setError(data.error || "Kayıt olurken bir hata oluştu.");
+      }
+    } catch (err) {
+      setError("Sunucuya bağlanılamadı.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex">
       {/* SOL TARAF: Form Alanı */}
@@ -16,13 +62,19 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          <form className="space-y-5">
+          {/* Hata ve Başarı Mesajları */}
+          {error && <div className="mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm font-medium border border-red-100">{error}</div>}
+          {success && <div className="mb-4 p-3 rounded-lg bg-green-50 text-green-600 text-sm font-medium border border-green-100">{success}</div>}
+
+          <form onSubmit={handleRegister} className="space-y-5">
             {/* Ad Soyad */}
             <div>
               <label className="block text-sm font-semibold text-gray-700">Ad Soyad</label>
               <input
                 type="text"
                 required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all"
                 placeholder="Adınız ve Soyadınız"
               />
@@ -34,6 +86,8 @@ export default function RegisterPage() {
               <input
                 type="tel"
                 required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all"
                 placeholder="0 (5XX) XXX XX XX"
               />
@@ -45,6 +99,8 @@ export default function RegisterPage() {
               <input
                 type="email"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all"
                 placeholder="ornek@dertacar.com"
               />
@@ -56,6 +112,8 @@ export default function RegisterPage() {
               <input
                 type="password"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="mt-2 block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-transparent outline-none transition-all"
                 placeholder="••••••••"
               />
@@ -64,9 +122,10 @@ export default function RegisterPage() {
             {/* Buton */}
             <button
               type="submit"
-              className="w-full flex justify-center mt-6 py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition-colors"
+              disabled={loading}
+              className="w-full flex justify-center mt-6 py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition-colors disabled:opacity-70"
             >
-              Kayıt Ol
+              {loading ? "Kaydediliyor..." : "Kayıt Ol"}
             </button>
           </form>
 
@@ -85,11 +144,8 @@ export default function RegisterPage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1000&auto=format&fit=crop')" }}
         >
-          {/* Karanlık Overlay */}
           <div className="absolute inset-0 bg-black/60"></div>
         </div>
-        
-        {/* Görsel Üzerindeki Yazı */}
         <div className="relative z-10 flex flex-col justify-end p-16 text-white h-full">
           <h2 className="text-4xl font-bold mb-4">Filomuzu Keşfetmeye Başlayın.</h2>
           <p className="text-lg text-gray-300">
