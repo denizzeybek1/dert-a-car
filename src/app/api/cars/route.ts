@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { db } from "@/db";
 import { cars } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq,asc } from "drizzle-orm";
 
 const SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || "dertacar-gizli-sifre-123"
@@ -25,7 +25,7 @@ async function isAdminRequest() {
 // ARAÇLARI LİSTELEME (GET /api/admin/cars)
 export async function GET() {
   try {
-    const allCars = await db.select().from(cars);
+    const allCars = await db.select().from(cars).orderBy(asc(cars.id));
     return NextResponse.json(allCars, { status: 200 });
   } catch (error) {
     console.error("GET /api/admin/cars hatası:", error);
