@@ -22,17 +22,14 @@ export const metadata: Metadata = {
   description: "Yeni Nesil Araç Kiralama",
 };
 
-// 2. Fonksiyonu 'async' yapıyoruz ki veritabanı/çerez işlemlerini bekleyebilsin
-// Not: Type hatası almamak için LayoutProps yerine standart React.ReactNode kullandım.
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  // 3. Çerezlerden (cookies) auth_token'ı okuyoruz
   const cookieStore = await cookies();
   const token = cookieStore.get("auth_token")?.value;
-  const isLoggedIn = !!token; // token varsa true, yoksa false döner
+  const isLoggedIn = !!token;
 
   return (
     <html
-      lang="en"
+      lang="tr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
@@ -62,7 +59,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {/* 4. DİNAMİK BUTON ALANI */}
               <div className="flex items-center space-x-4">
                 {isLoggedIn ? (
-                  // KULLANICI GİRİŞ YAPTIYSA GÖZÜKEN KISIM
                   <>
                     <Link href="/hesabim" className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors">
                       Hesabım
@@ -70,7 +66,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     <LogoutButton />
                   </>
                 ) : (
-                  // KULLANICI GİRİŞ YAPMADIYSA GÖZÜKEN KISIM
                   <>
                     <Link href="/login" className="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors">
                       Giriş Yap
@@ -86,8 +81,46 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </header>
 
-        {children}
+        <div className="flex-1">{children}</div>
 
+        {/* Alt Bilgi (Footer) */}
+        <footer className="bg-blue-600 text-white border-t border-blue-500">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div className="text-center sm:text-left">
+                <Link href="/" className="text-xl font-extrabold tracking-tight">
+                  Dert<span className="text-blue-200">-a-</span>Car
+                </Link>
+                <p className="text-xs text-blue-100 mt-1">
+                  Yeni Nesil Araç Kiralama • Deniz Zeybek
+                </p>
+              </div>
+
+              <nav className="flex flex-wrap items-center justify-center gap-6 text-sm font-medium text-blue-100">
+                <Link href="/" className="hover:text-white transition-colors">
+                  Anasayfa
+                </Link>
+                <Link href="/araclar" className="hover:text-white transition-colors">
+                  Araçlar
+                </Link>
+                <Link href="/kampanyalar" className="hover:text-white transition-colors">
+                  Kampanyalar
+                </Link>
+                <Link href="/hakkimizda" className="hover:text-white transition-colors">
+                  Hakkımızda
+                </Link>
+                <Link href="/hesabim" className="hover:text-white transition-colors">
+                  Hesabım
+                </Link>
+              </nav>
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-blue-500/70 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-blue-100">
+              <p>© {new Date().getFullYear()} •  Tüm hakları saklıdır.</p>
+              <p>Dijital Araç Kiralama Platformu</p>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );
