@@ -1,5 +1,6 @@
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
 
+
 // Kullanıcılar Tablosu
 export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
@@ -7,6 +8,7 @@ export const users = sqliteTable('users', {
   email: text('email').notNull().unique(),
   phone: text('phone').notNull(),
   password: text('password').notNull(),
+  role: text("role").default("user").notNull(), // 'user' veya 'admin'
 });
 
 // Araçlar Tablosu
@@ -15,7 +17,7 @@ export const cars = sqliteTable('cars', {
   brand: text('brand').notNull(), // Örn: Renault, Fiat
   model: text('model').notNull(), // Örn: Clio, Egea
   year: integer('year').notNull(), // Örn: 2023
-  pricePerDay: integer('price_per_day').notNull(), // Günlük kiralama ücreti
+  dailyPrice: integer('daily_price').notNull(), // Günlük kiralama ücreti
   isAvailable: integer('is_available', { mode: 'boolean' }).default(true), // Araç müsait mi?
 });
 
