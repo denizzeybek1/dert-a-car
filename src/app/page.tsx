@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
@@ -17,22 +19,23 @@ export default function HomePage() {
             Aradığınız aracı saniyeler içinde bulun, özellikleri karşılaştırın ve yola çıkın.
           </p>
 
-          {/* Hızlı Arama/Filtreleme Çubuğu */}
-          <div className="bg-white p-2 rounded-xl shadow-lg flex flex-col md:flex-row gap-2">
-            <input 
-              type="text" 
-              placeholder="Marka veya Model ara..." 
-              className="flex-grow px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
-            />
-            <select className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
-              <option value="">Vites Türü</option>
-              <option value="otomatik">Otomatik</option>
-              <option value="manuel">Manuel</option>
-            </select>
-            <button className="bg-blue-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors">
-              Araç Bul
-            </button>
-          </div>
+          {/* Araçlara Gözat Butonu */}
+<Link
+  href="/araclar"
+  className="inline-flex items-center gap-2.5 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-blue-950/35 ring-1 ring-white/20 transition-all duration-200 group"
+>
+  <span>Araçlara Gözat</span>
+  <svg
+    className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2.4}
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+  </svg>
+</Link>
         </div>
       </section>
 
